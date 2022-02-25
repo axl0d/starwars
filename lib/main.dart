@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:starwars/src/models/character.dart';
+import 'package:starwars/src/models/gender.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,58 +12,87 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Starwars',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xffa44cd3)),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Starwars Characters'),
+        centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (_, index) => Card(
+          child: ExpansionTile(
+            title: Text(
+              character.name,
+              style: Theme.of(context).textTheme.headline6,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+            subtitle: GenderChip(gender: character.gender),
+            childrenPadding: const EdgeInsets.all(8),
+            children: [
+              Text(
+                'films cast',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+              for (final movie in character.movies)
+                Chip(
+                  label: Text(movie),
+                ),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        itemCount: 5,
       ),
     );
   }
 }
+
+class GenderChip extends StatelessWidget {
+  const GenderChip({
+    Key? key,
+    required this.gender,
+  }) : super(key: key);
+
+  final Gender gender;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Chip(
+        label: Text(
+          gender.toString(),
+          style: const TextStyle(color: Colors.white),
+        ),
+        backgroundColor: gender.map(
+          male: (_) => const Color(0xff0f4d92),
+          female: (_) => const Color(0xfff64a8a),
+          na: (_) => const Color(0xffff7518),
+        ),
+      ),
+    );
+  }
+}
+
+const character = Character(
+  name: 'Luke Skywalker',
+  gender: Gender.male(),
+  movies: [
+    'https://swapi.dev/api/films/1/',
+    'https://swapi.dev/api/films/2/',
+    'https://swapi.dev/api/films/3/',
+    'https://swapi.dev/api/films/6/'
+  ],
+);
