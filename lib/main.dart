@@ -30,6 +30,17 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Starwars Characters'),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<void>(
+            icon: const Icon(Icons.filter_alt),
+            itemBuilder: (_) => [
+              const PopupMenuItem(child: Text('All')),
+              const PopupMenuItem(child: Text('Male')),
+              const PopupMenuItem(child: Text('Female')),
+              const PopupMenuItem(child: Text('N/A')),
+            ],
+          ),
+        ],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8),
