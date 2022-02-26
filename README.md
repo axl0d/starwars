@@ -1,6 +1,11 @@
 # starwars
 
-A new Flutter project.
+A new Flutter project that show a character list of starwars movies.
+
+
+## Features
+
+This project uses `flutter_riverpod` an injector dependencies and wrapper state notifier to manage states at runtime, and `swapi_repository` a package where domain layer was separated, allow to use request methods that will be computate to show beautiful UIs.
 
 ## Getting Started
 
