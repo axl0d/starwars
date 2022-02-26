@@ -2,6 +2,8 @@
 
 A new Flutter project that show a character list of starwars movies.
 
+![demo](./screenshot/starwars.gif)
+
 
 ## Features
 
