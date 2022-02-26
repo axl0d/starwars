@@ -13,6 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^1.0.3
+  swapi_repository:
+    git: https://github.com/axl0d/swapi_repository.git
 
 dev_dependencies:
   flutter_test:
